@@ -1,4 +1,4 @@
-package works.pel.madgallery.ui.theme
+package works.pel.madgallery.app.ui.theme
 
 import android.app.Activity
 import android.os.Build

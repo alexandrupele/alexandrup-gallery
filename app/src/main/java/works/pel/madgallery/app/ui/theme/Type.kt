@@ -1,4 +1,4 @@
-package works.pel.madgallery.ui.theme
+package works.pel.madgallery.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
