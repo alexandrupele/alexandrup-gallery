@@ -29,7 +29,7 @@ class PhotosMapper @Inject constructor() {
         mapFromDatabase(databasePhoto)
     }
 
-    fun mapToDatabaseModel(photos: List<Photo>) = photos.map { photo ->
+    fun mapToDatabase(photos: List<Photo>) = photos.map { photo ->
         DatabasePhoto(
             albumId = photo.albumId,
             id = photo.id,

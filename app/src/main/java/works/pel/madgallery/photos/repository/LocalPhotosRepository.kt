@@ -19,6 +19,6 @@ class LocalPhotosRepository @Inject constructor(
     }
 
     suspend fun savePhotos(photos: List<Photo>) {
-        dao.savePhotos(mapper.mapToDatabaseModel(photos))
+        dao.savePhotos(mapper.mapToDatabase(photos))
     }
 }

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Loading() {
+fun CenterScreenLoading() {
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import works.pel.madgallery.R
-import works.pel.madgallery.app.ui.composable.Loading
+import works.pel.madgallery.app.ui.composable.CenterScreenLoading
 import works.pel.madgallery.photos.repository.model.Photo
 import works.pel.madgallery.viewer.viewmodel.ViewState
 import works.pel.madgallery.viewer.viewmodel.ViewerViewModel
@@ -33,7 +33,7 @@ fun ViewerScreen(
     }
 
     when (val state = viewState) {
-        is ViewState.Loading -> Loading()
+        is ViewState.Loading -> CenterScreenLoading()
         is ViewState.Success -> Photo(state.photo)
         is ViewState.Error -> Text(stringResource(R.string.could_not_load_photo))
     }

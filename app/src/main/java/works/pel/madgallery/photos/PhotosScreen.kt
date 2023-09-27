@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import works.pel.madgallery.R
-import works.pel.madgallery.app.ui.composable.Loading
+import works.pel.madgallery.app.ui.composable.CenterScreenLoading
 import works.pel.madgallery.photos.repository.model.Photo
 import works.pel.madgallery.photos.viewmodel.PhotosViewModel
 import works.pel.madgallery.photos.viewmodel.ViewState
@@ -38,7 +39,7 @@ fun PhotosScreen(
     }
 
     when (val state = viewState) {
-        is ViewState.Loading -> Loading()
+        is ViewState.Loading -> CenterScreenLoading()
         is ViewState.Success -> PhotosList(state.photos, onPhotoClick)
         is ViewState.Error -> Text(stringResource(R.string.could_not_load_photos))
     }
@@ -70,13 +71,15 @@ fun PhotoItem(
     photo: Photo,
     onPhotoClick: (id: Long) -> Unit
 ) {
-    Card(
+    OutlinedCard(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
             .clickable { onPhotoClick(photo.id) },
-        elevation = CardDefaults.cardElevation(8.dp),
-    ) {
+        elevation = CardDefaults.cardElevation(4.dp),
+        shape = RoundedCornerShape(0)
+
+        ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
