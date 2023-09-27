@@ -1,7 +1,9 @@
 package works.pel.madgallery.photos
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,7 +24,8 @@ import works.pel.madgallery.photos.viewmodel.PhotosViewModel
 
 @Composable
 fun PhotosScreen(
-    viewModel: PhotosViewModel = hiltViewModel()
+    viewModel: PhotosViewModel = hiltViewModel(),
+    onPhotoClick: (id: Int) -> Unit
 ) {
 
     val listOfPhotos by remember {
@@ -31,15 +34,27 @@ fun PhotosScreen(
 
     LazyColumn {
         items(listOfPhotos) { photo ->
-            PhotoItem(photo)
+            PhotoItem(photo) { photoId ->
+                onPhotoClick(photoId)
+            }
         }
     }
-
 }
 
 @Composable
-fun PhotoItem(photo: Photo) {
-    Card(modifier = Modifier.padding(8.dp), elevation = CardDefaults.cardElevation(8.dp)) {
+fun PhotoItem(
+    photo: Photo,
+    onPhotoClick: (id: Int) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .clickable {
+                onPhotoClick(photo.id)
+            },
+        elevation = CardDefaults.cardElevation(8.dp),
+    ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Image(
                 modifier = Modifier.size(80.dp),

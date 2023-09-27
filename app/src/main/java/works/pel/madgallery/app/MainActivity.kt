@@ -7,11 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import works.pel.madgallery.photos.PhotosScreen
 import works.pel.madgallery.app.ui.theme.MadGalleryTheme
+import works.pel.madgallery.photos.PhotosScreen
+import works.pel.madgallery.viewer.ViewerScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -24,17 +30,32 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PhotosScreen()
+                    MadGalleryApp()
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    MadGalleryTheme {
-        PhotosScreen()
+fun MadGalleryApp() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "photos") {
+        composable("photos") {
+            PhotosScreen { photoId ->
+                navController.navigate("viewer/${photoId}")
+            }
+        }
+
+        composable(
+            "viewer/{photoId}",
+            arguments = listOf(navArgument("photoId") { type = NavType.IntType })
+        ) {
+            val photoId = remember {
+                it.arguments?.getInt("photoId")
+            }
+            ViewerScreen(photoId)
+        }
     }
 }
