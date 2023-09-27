@@ -1,4 +1,4 @@
-package works.pel.madgallery.photos.viewmodel
+package works.pel.madgallery.viewer.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -8,29 +8,29 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import works.pel.madgallery.photos.repository.model.Photo
-import works.pel.madgallery.photos.usecase.GetPhotosUseCase
+import works.pel.madgallery.viewer.usecase.LoadPhotoUseCase
 import javax.inject.Inject
 
 sealed class ViewState {
     object Loading : ViewState()
-    data class Success(val photos: List<Photo>) : ViewState()
+    data class Success(val photo: Photo) : ViewState()
     data class Error(val errorMessage: String) : ViewState()
 }
 
 @HiltViewModel
-class PhotosViewModel @Inject constructor(
-    private val useCase: GetPhotosUseCase
+class ViewerViewModel @Inject constructor(
+    private val useCase: LoadPhotoUseCase
 ) : ViewModel() {
 
     private val _viewState: MutableState<ViewState> = mutableStateOf(ViewState.Loading)
     val viewState: State<ViewState> = _viewState
 
-    init {
+    fun loadPhoto(photoId: Long) {
         _viewState.value = ViewState.Loading
         viewModelScope.launch {
             try {
-                val photos = useCase.getPhotos()
-                _viewState.value = ViewState.Success(photos)
+                val photo = useCase.loadPhoto(photoId)
+                _viewState.value = ViewState.Success(photo)
             } catch (e: Exception) {
                 _viewState.value = ViewState.Error(e.message ?: "Unknown error")
             }

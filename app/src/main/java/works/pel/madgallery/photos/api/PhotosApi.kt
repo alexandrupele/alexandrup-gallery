@@ -7,4 +7,8 @@ interface PhotosApi {
 
     @GET("photos")
     suspend fun getPhotos(): PhotosResponse
+
+    companion object {
+        const val BASE_URL = "https://jsonplaceholder.typicode.com"
+    }
 }

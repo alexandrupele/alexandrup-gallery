@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MadGallery</string>
+    <string name="could_not_load_photos">Could not load photos</string>
+    <string name="could_not_load_photo">Could not load photo</string>
 </resources>
